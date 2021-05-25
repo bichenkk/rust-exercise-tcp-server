@@ -1,14 +1,15 @@
-use std::net::{TcpStream};
+// import std library
 use std::io::{Read, Write};
+use std::net::TcpStream;
 use std::str::from_utf8;
 
 fn main() {
+    // connect to localhost:7878
     match TcpStream::connect("localhost:7878") {
+        // use match to handle error*
         Ok(mut stream) => {
             println!("Successfully connected to server in port 3333");
-
             let msg = b"Hello!";
-
             stream.write(msg).unwrap();
             println!("Sent Hello, awaiting reply...");
 
@@ -21,12 +22,12 @@ fn main() {
                         let text = from_utf8(&data).unwrap();
                         println!("Unexpected reply: {}", text);
                     }
-                },
+                }
                 Err(e) => {
                     println!("Failed to receive data: {}", e);
                 }
             }
-        },
+        }
         Err(e) => {
             println!("Failed to connect: {}", e);
         }
